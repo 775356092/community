@@ -1,0 +1,19 @@
+server:
+  port: 80
+  servlet:
+    context-path: /community
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/community?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT&useSSL=false
+    username: root
+    password: 1234
+
+  thymeleaf:
+    cache: false
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.wanghao.community.entity
+  configuration:
+    use-generated-keys: true
+    map-underscore-to-camel-case: true
