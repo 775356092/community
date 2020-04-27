@@ -8,12 +8,22 @@ spring:
     url: jdbc:mysql://localhost:3306/community?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT&useSSL=false
     username: root
     password: 1234
-
   thymeleaf:
     cache: false
+  mail:
+    host: smtp.qq.com
+    port: 465
+    username: 775356092@qq.com
+    password: tmqyntbjczhpbcjg
+    protocol: smtps
+    properties:
+      mail.smtp.starttls.enable: true
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.wanghao.community.entity
   configuration:
     use-generated-keys: true
     map-underscore-to-camel-case: true
+community:
+  path:
+    domain: http://localhost:80
