@@ -160,4 +160,48 @@ public class UserServiceImpl implements UserService, CommunityConstant {
     public LoginTicket findByTicket(String ticket) {
         return loginTicketMapper.selectByTicket(ticket);
     }
+
+    @Override
+    public int updateHeaderUrl(int userId, String headerUrl) {
+        return userMapper.updateHeader(userId,headerUrl);
+    }
+
+    @Override
+    public Map<String, Object> updatePassword(int userId, String password,String newPassword,String repeat) {
+        HashMap<String, Object> map = new HashMap<>();
+        //原始密码为空
+        if(StringUtils.isBlank(password)){
+            map.put("passwordMsg","原始密码不能为空！");
+            return map;
+        }
+        //新密码为空
+        if(StringUtils.isBlank(newPassword)){
+            map.put("newPasswordMsg","新密码不能为空！");
+            return map;
+        }
+        //确认密码为空
+        if(StringUtils.isBlank(repeat)){
+            map.put("newPasswordMsg","确认密码不能为空！");
+            return map;
+        }
+        //两次密码输入不一致
+        if(!newPassword.equals(repeat)){
+            map.put("newPasswordMsg","两次密码输入不一致请重新输入！");
+            return map;
+        }
+
+        User user = userMapper.selectById(userId);
+        String oldPassword = user.getPassword();
+        String salt = user.getSalt();
+        String newPsd = CommunityUtil.MD5(password+salt);
+        //原密码不一致
+        if(!newPsd.equals(oldPassword)){
+            map.put("passwordMsg","原始密码错误请重新输入！");
+            return map;
+        }
+
+        //更新密码
+        userMapper.updatePassword(userId,CommunityUtil.MD5(newPassword+salt));
+        return map;
+    }
 }

@@ -27,3 +27,4 @@ mybatis:
 community:
   path:
     domain: http://localhost:80
+    upload: D:\work\upload
